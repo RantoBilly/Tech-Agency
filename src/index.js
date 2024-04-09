@@ -5,6 +5,9 @@ import './index.css';
 import App from './Pages/Home';
 import Survey from './Pages/Survey';
 import Header from './Components/Header';
+import Result from './Pages/Results';
+import Freelance from './Pages/Freelances';
+import Error from './Components/Error';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
@@ -21,7 +24,10 @@ ReactDOM.render(
       <Header />
       <Routes>
         <Route path="/" element={<App />}/>
-        <Route path="/survey" element={<Survey />}/>
+        <Route path="/survey/:questionNumber" element={<Survey />}/>
+        <Route path="/Result" element={<Result />}/>
+        <Route path="/Freelance" element={<Freelance />}/>
+        <Route path="*" element={<Error />}/> {/** Return the Error component in every invalid URL */}
       </Routes>
     </Router>
   </React.StrictMode>,
