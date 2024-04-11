@@ -1,7 +1,7 @@
 import React from 'react';
 //import ReactDOM from 'react-dom/client';
 import ReactDOM from 'react-dom';
-import './index.css';
+import styled, { createGlobalStyle } from 'styled-components'
 import App from './Pages/Home';
 import Survey from './Pages/Survey';
 import Header from './Components/Header';
@@ -18,9 +18,16 @@ root.render(
   </React.StrictMode>
 );*/
 
+const GlobalStyle = createGlobalStyle`
+  div {
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  }
+`
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
+      <GlobalStyle />
       <Header />
       <Routes>
         <Route path="/" element={<App />}/>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import colors from '../../Tools/Style/colors'
 
 //Stylizing an element form a library
 // $ is used only for React components (e.g : Link) and not for HTML elements (cannot work with h1 or p etc ...)
@@ -13,7 +14,7 @@ const StyledLink = styled(Link)`
         props.$isFullLink && `
             color:white;
             border-radius: 30px;
-            background-color: #5843E4;
+            background-color: ${colors.primary};
         `
     }
 `
