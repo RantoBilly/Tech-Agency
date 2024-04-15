@@ -10,6 +10,9 @@ import Freelance from './Pages/Freelances';
 import Error from './Components/Error';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { ThemeProvider } from './Tools/Context';
+import Footer from './Components/Footer';
+import GlobalStyle from './Tools/Style/GlobalStyle';
 
 /*const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,15 +21,18 @@ root.render(
   </React.StrictMode>
 );*/
 
+/*
 const GlobalStyle = createGlobalStyle`
   div {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
   }
 `
+*/
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
+      <ThemeProvider>
       <GlobalStyle />
       <Header />
       <Routes>
@@ -36,6 +42,8 @@ ReactDOM.render(
         <Route path="/Freelance" element={<Freelance />}/>
         <Route path="*" element={<Error />}/> {/** Return the Error component in every invalid URL */}
       </Routes>
+      <Footer/>
+      </ThemeProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
