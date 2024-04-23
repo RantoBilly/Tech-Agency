@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import colors from '../../Tools/Style/colors'
 import { useState, useEffect } from 'react'
 import { Loader } from '../../Tools/Style/Atoms'
+import { useFetch, useTheme } from '../../Tools/Hooks'
 
 const freelanceProfiles = [
     {
@@ -35,17 +36,17 @@ const CardsContainer = styled.div`
 `
 const PageTitle = styled.h1`
     font-size: 30px;
-    color:black;
+    color:${({theme}) => (theme === 'light' ? '#000000' : '#ffffff')};
     text-align: center;
     padding-bottom: 30px;
 `
-
+//color: ${colors.secondary};
 const PageSubtitle = styled.h2`
     font-size: 20px;
-    color: ${colors.secondary};
     font-weight: 300;
     text-align: center;
     padding-bottom: 30px;
+    color: ${({theme}) => (theme === 'light' ? '#000000' : '#ffffff')};
 `
 const LoaderWrapper = styled.div`
     display: flex;
@@ -55,43 +56,26 @@ const LoaderWrapper = styled.div`
 
 function Freelance(){
 
-    //useState stores the returned datas from the API
-    const [freelancersList, setFreelancesList] = useState([])
-    const [isDataLoading, setDataLoading] = useState(false)
-    const [error, setError] = useState(null)
-
+    
+    const { theme } = useTheme()
     // launch the call API
-    useEffect(
-        () => {
-            async function fetchFreelance(){
-                setDataLoading(true)
-                try{
-                    const response = await fetch(`http://localhost:8000/freelances`)
-                    // name of the object should be the same as where it's declared in the API :
-                    const { freelancersList } = await response.json()
-                    setFreelancesList(freelancersList)
-                }catch(err){
-                    console.log(err)
-                    setError(true)
-                }finally{
-                    setDataLoading(false)
-                }
-            }
-            fetchFreelance()
-        }, []
-    )
+    const {data, isLoading, error} = useFetch(`http://localhost:8000/freelances`)
+
+     
 
     if (error) {
         return <span>An error ocuured !</span>
     }
 
+    const freelancersList = data?.freelancersList // this syntaxe is used for arrays as freelancersList is an array (from the URL of the API)
+
     return(
         <div>
-            <PageTitle>Find your receiver</PageTitle>
-            <PageSubtitle>We got the best profiles for you at Shiny</PageSubtitle>
-            {isDataLoading ? (<LoaderWrapper><Loader/></LoaderWrapper>):(
+            <PageTitle theme={theme}>Find your receiver</PageTitle>
+            <PageSubtitle theme={theme}>Shiny offers you the best profiles</PageSubtitle>
+            {isLoading ? (<LoaderWrapper><Loader/></LoaderWrapper>):(
                 <CardsContainer>
-                {freelancersList.map((profile, index) => (
+                {freelancersList && freelancersList.map((profile, index) => (
                     <Card 
                         key={`${profile.id}-${index}`}
                         label={profile.job}
@@ -106,3 +90,37 @@ function Freelance(){
 }
 
 export default Freelance
+
+//Without the personal hook
+/**
+ * //useState stores the returned datas from the API
+
+    //freelancersListis an array of objects, so [] should be the returned state as we use the map method for
+    //returning it
+    //const [freelancersList, setFreelancesList] = useState([])
+
+    //const [isDataLoading, setDataLoading] = useState(false)
+    
+    //const [error, setError] = useState(null)
+ * 
+ * useEffect(
+        () => {
+            async function fetchFreelance(){
+                setDataLoading(true)
+                try{
+                    const response = await fetch(`http://localhost:8000/freelances`)
+                    // name of the object should be the same as where it's declared in the API :
+                    const { freelancersList } = await response.json() // Destructuration
+                    setFreelancesList(freelancersList)
+                }catch(err){
+                    console.log(err)
+                    setError(true)
+                }finally{
+                    setDataLoading(false)
+                }
+            }
+            fetchFreelance()
+        }, []
+    )
+ * 
+ */

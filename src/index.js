@@ -10,7 +10,7 @@ import Freelance from './Pages/Freelances';
 import Error from './Components/Error';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { ThemeProvider } from './Tools/Context';
+import { SurveyProvider, ThemeProvider } from './Tools/Context';
 import Footer from './Components/Footer';
 import GlobalStyle from './Tools/Style/GlobalStyle';
 
@@ -33,6 +33,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider>
+        <SurveyProvider>
       <GlobalStyle />
       <Header />
       <Routes>
@@ -43,6 +44,7 @@ ReactDOM.render(
         <Route path="*" element={<Error />}/> {/** Return the Error component in every invalid URL */}
       </Routes>
       <Footer/>
+      </SurveyProvider>
       </ThemeProvider>
     </Router>
   </React.StrictMode>,
