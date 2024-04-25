@@ -1,3 +1,8 @@
+API REST: 
+In the directory of the API REST :
+# Run 'npm install' to install dependencies
+# Run 'npm start' to start the API
+
 <<<<<<< HEAD
 # Getting Started with Create React App
 
